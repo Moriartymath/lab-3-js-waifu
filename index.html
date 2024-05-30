@@ -1,0 +1,52 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="StylePage/style.css" />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined"
+      rel="stylesheet"
+    />
+    <title>Document</title>
+    <script type="module" src="Scripts/script.js" defer></script>
+  </head>
+  <body>
+    <div class="image-container">
+      <img src="images/rainy.jpg" alt="rainy" class="image-weather" />
+      <div class="overlay-main">
+        <div class="left-info">
+          <div class="current-temperature-main">
+            <h1>12 <span>&#8451;</span></h1>
+          </div>
+          <div class="date-location-info">
+            <h2 class="city-name">London</h2>
+            <p class="date-time">06:09 Sunday, 6 Oct 19</p>
+          </div>
+          <div class="image-continer-svg">
+            <img
+              src="images/rainy-5.svg"
+              alt="rainy"
+              class="current-svg-weather"
+            />
+          </div>
+        </div>
+        <div class="right-info">
+          <div class="overlay-right"></div>
+          <div class="weather-info">
+            <header class="search-city">
+              <input
+                type="search"
+                placeholder="city"
+                class="weather-search-city"
+              />
+              <span class="material-symbols-outlined"> search </span>
+            </header>
+            <main class="weather-details">
+              <div class="main-details"></div>
+            </main>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

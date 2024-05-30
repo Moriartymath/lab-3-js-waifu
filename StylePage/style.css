@@ -1,0 +1,120 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --main-color: #ffffff;
+  --secondary-color: #eaeaea;
+}
+html {
+  overflow-y: scroll;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-size: 6rem;
+}
+
+main {
+  height: 75svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.anime-info {
+  width: 40%;
+  height: auto;
+}
+
+.welcome {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  background: rgb(144, 91, 101);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.links {
+  display: flex;
+  flex-direction: row;
+  column-gap: 2em;
+  list-style: none;
+}
+
+.filter {
+  display: flex;
+  flex-direction: row;
+  column-gap: 1em;
+  user-select: none;
+}
+
+.weather-search-city {
+  text-decoration-style: none;
+  border-width: 0;
+  border-radius: 15svh;
+  text-align: center;
+  transition: all 0.4s ease-in-out;
+}
+
+.weather-search-city:focus {
+  text-decoration-style: none;
+  outline-style: none;
+  background: rgba(236, 232, 227, 0.762);
+}
+
+.image-container {
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  z-index: 1;
+}
+.image-weather {
+  width: 100%;
+  height: 100%;
+}
+.left-info,
+.right-info {
+  z-index: 1000;
+}
+
+.overlay-main {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+}
+
+.left-info {
+  display: flex;
+  position: relative;
+  top: 25%;
+  right: 7%;
+  flex-direction: row;
+  align-self: center;
+  column-gap: 1em;
+  margin-top: 2em;
+  width: fit-content;
+  color: white;
+  margin-left: 5em;
+}
+
+.current-svg-weather {
+  height: 100%;
+}
+
+.date-location-info {
+  display: flex;
+  flex-direction: column;
+  align-self: first baseline;
+  align-items: center;
+}
+
+h3 {
+  font-size: smaller;
+}
