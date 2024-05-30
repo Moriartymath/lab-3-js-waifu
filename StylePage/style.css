@@ -27,7 +27,7 @@ html {
   display: flex;
   flex-direction: row;
   column-gap: 1em;
-  user-select: none;
+  /* user-select: none; */
 }
 
 .weather-search-city {
@@ -100,7 +100,7 @@ html {
   column-gap: 2em;
   width: fit-content;
   color: white;
-  user-select: none;
+  /* user-select: none; */
   flex-wrap: wrap;
 }
 
@@ -143,4 +143,8 @@ body {
   flex-wrap: nowrap;
   overflow-y: hidden;
   background: var(--secondary-color);
+}
+
+#map {
+  height: 100%;
 }
