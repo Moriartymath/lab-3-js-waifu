@@ -6,33 +6,14 @@
 
 :root {
   --main-color: #ffffff;
-  --secondary-color: #eaeaea;
+  --secondary-color: #525252e7;
+  overflow: hidden;
 }
 html {
   overflow-y: scroll;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
     Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  font-size: 6rem;
-}
-
-main {
-  height: 75svh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-.anime-info {
-  width: 40%;
-  height: auto;
-}
-
-.welcome {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-    Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  background: rgb(144, 91, 101);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  font-size: 3svh;
 }
 
 .links {
@@ -51,16 +32,34 @@ main {
 
 .weather-search-city {
   text-decoration-style: none;
-  border-width: 0;
-  border-radius: 15svh;
+  border-width: 0 0 0.05em 0;
+  background: transparent;
   text-align: center;
   transition: all 0.4s ease-in-out;
+  font-size: inherit;
+
+  border-bottom: #ffffff;
+  border-style: solid;
+  padding-bottom: 0.3em;
+}
+.search-city {
+  display: flex;
+  flex-direction: row;
+  margin-top: 1.5em;
+}
+.search {
+  align-self: center;
+  font-size: inherit;
+  color: bisque;
+}
+.weather-search-city::placeholder {
+  opacity: 0.5;
+  color: #ffffff;
 }
 
 .weather-search-city:focus {
-  text-decoration-style: none;
   outline-style: none;
-  background: rgba(236, 232, 227, 0.762);
+  text-decoration: none;
 }
 
 .image-container {
@@ -92,16 +91,17 @@ main {
 
 .left-info {
   display: flex;
-  position: relative;
-  top: 25%;
-  right: 7%;
+  position: sticky;
+  top: 75%;
+  right: 40%;
+  left: 8%;
   flex-direction: row;
   align-self: center;
-  column-gap: 1em;
-  margin-top: 2em;
+  column-gap: 2em;
   width: fit-content;
   color: white;
-  margin-left: 5em;
+  user-select: none;
+  flex-wrap: wrap;
 }
 
 .current-svg-weather {
@@ -117,4 +117,30 @@ main {
 
 h3 {
   font-size: smaller;
+}
+
+.city-name {
+  letter-spacing: 0.3rem;
+  font-weight: 900;
+  font-size: 2rem;
+}
+
+body {
+  background: gray;
+}
+
+.right-info {
+  width: 55svh;
+}
+
+.weather-info {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  row-gap: 1.5rem;
+  align-items: center;
+  flex-wrap: nowrap;
+  overflow-y: hidden;
+  background: var(--secondary-color);
 }

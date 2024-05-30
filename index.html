@@ -2,21 +2,21 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="StylePage/style.css" />
     <link
       href="https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="StylePage/style.css" />
     <title>Document</title>
     <script type="module" src="Scripts/script.js" defer></script>
   </head>
   <body>
     <div class="image-container">
-      <img src="images/rainy.jpg" alt="rainy" class="image-weather" />
+      <!-- <img src="images/rainy.jpg" alt="rainy" class="image-weather" /> -->
       <div class="overlay-main">
         <div class="left-info">
           <div class="current-temperature-main">
-            <h1>12 <span>&#8451;</span></h1>
+            <h1 class="temp">12</h1>
           </div>
           <div class="date-location-info">
             <h2 class="city-name">London</h2>
@@ -39,7 +39,7 @@
                 placeholder="city"
                 class="weather-search-city"
               />
-              <span class="material-symbols-outlined"> search </span>
+              <span class="material-symbols-outlined search"> search </span>
             </header>
             <main class="weather-details">
               <div class="main-details"></div>
