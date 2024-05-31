@@ -26,7 +26,6 @@ async function fetchWeather() {
   const url = `http://api.weatherapi.com/v1/forecast.json?key=45d690a2e9744e09879101551242905&q=${city}`;
 
   const response = await axios.get(url);
-
   parseWeatherObj(response.data).then(coord => {
     const { lat, lon } = coord;
     scrollToCity(lat, lon, 15);

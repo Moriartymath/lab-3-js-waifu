@@ -6,6 +6,8 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
 }).addTo(map);
 
-export default function scrollToCity(x, y, zoom) {
+function scrollToCity(x, y, zoom) {
   map.flyTo([x, y], zoom);
 }
+
+export { scrollToCity as default };

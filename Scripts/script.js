@@ -1,5 +1,5 @@
 'use strict';
-import fetchWeather from './weather.js';
+import fetchWeather, { hello } from './weather.js';
 
 window.addEventListener('load', () => {
   document.querySelector('.search').addEventListener('click', () => {
