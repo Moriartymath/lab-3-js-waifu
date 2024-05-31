@@ -35,8 +35,8 @@ html {
   border-width: 0 0 0.05em 0;
   background: transparent;
   text-align: center;
-  transition: all 0.4s ease-in-out;
   font-size: inherit;
+  color: antiquewhite;
 
   border-bottom: #ffffff;
   border-style: solid;
@@ -45,7 +45,7 @@ html {
 .search-city {
   display: flex;
   flex-direction: row;
-  margin-top: 1.5em;
+  font-size: 1.7svw;
 }
 .search {
   align-self: center;
@@ -97,13 +97,23 @@ html {
   left: 8%;
   flex-direction: row;
   align-self: center;
-  column-gap: 2em;
+  column-gap: 10%;
   width: fit-content;
-  color: white;
-  /* user-select: none; */
-  flex-wrap: wrap;
+  color: rgb(0, 0, 0);
+  user-select: none;
+  font-weight: 900;
+  font-size: 2em;
+  backdrop-filter: blur(1.5px);
 }
 
+.left-info .date-location-info,
+.image-continer-svg {
+  font-size: inherit;
+}
+
+.date-time {
+  font-size: 0.8rem;
+}
 .current-svg-weather {
   height: 100%;
 }
@@ -113,6 +123,7 @@ html {
   flex-direction: column;
   align-self: first baseline;
   align-items: center;
+  font-size: inherit;
 }
 
 h3 {
@@ -122,7 +133,7 @@ h3 {
 .city-name {
   letter-spacing: 0.3rem;
   font-weight: 900;
-  font-size: 2rem;
+  font-size: inherit;
 }
 
 body {
@@ -130,7 +141,8 @@ body {
 }
 
 .right-info {
-  width: 55svh;
+  width: 30svw;
+  transition: transform 1s, opacity 0.5s ease-in-out;
 }
 
 .weather-info {
@@ -147,4 +159,19 @@ body {
 
 #map {
   height: 100%;
+}
+
+.close-bar-container {
+  align-self: flex-start;
+  position: relative;
+  left: 5%;
+  user-select: none;
+}
+.side-bar-btn {
+  width: 3svw;
+}
+
+.closed {
+  transform: translate(80%);
+  opacity: 0.5;
 }
