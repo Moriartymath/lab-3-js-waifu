@@ -1,4 +1,4 @@
-import scrollToCity from './mapHandler.js';
+import MapHandler from './mapHandler.ts';
 import StoragePlaces from './storage.ts';
 import axios from 'axios';
 
@@ -33,7 +33,7 @@ const formaterTemp = Intl.NumberFormat(locale, {
   unit: 'celsius',
 });
 
-async function fetchWeather(ip: boolean) {
+async function fetchWeather(ip?: boolean) {
   const city = searchInput?.value;
   const baseForecastURL =
     'http://api.weatherapi.com/v1/forecast.json?key=45d690a2e9744e09879101551242905&q=';
@@ -41,13 +41,13 @@ async function fetchWeather(ip: boolean) {
   const response = await axios.get(baseForecastURL + (ip ? 'auto:ip' : city));
   parseWeatherObj(response.data).then(coord => {
     const { lat, lon } = coord;
-    scrollToCity(lat, lon, 15);
+    MapHandler.setDisplayedPos(lat, lon);
   });
 }
 
 const parseWeatherObj: (
   object: responseObj
-) => Promise<{ lat: Number; lon: Number }> = async function (
+) => Promise<{ lat: number; lon: number }> = async function (
   weatherObj: responseObj
 ) {
   const { current, forecast, location } = weatherObj;
@@ -67,4 +67,4 @@ const parseWeatherObj: (
   return { lat: location.lat, lon: location.lon };
 };
 
-export { fetchWeather as default };
+export { fetchWeather, MapHandler };
