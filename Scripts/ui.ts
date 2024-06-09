@@ -1,15 +1,16 @@
-import { fetchWeather, MapHandler } from './weather';
+import { fetchWeather, MapHandler, StoragePlaces } from './weather';
 import * as sideBar from './closeSideBar';
+import WeatherInfo from './weatherInfo';
 
 class UI {
-  static displayUI() {
+  static displayUI(): void {
     this.displayMap();
     this.sideBarUI();
   }
   private static displayMap(): void {
     window.addEventListener('load', () => {
       MapHandler.initMap();
-      fetchWeather(true);
+      fetchWeather(undefined, true);
       document.querySelector('.search')?.addEventListener('click', () => {
         fetchWeather();
       });
@@ -17,6 +18,7 @@ class UI {
   }
   private static sideBarUI(): void {
     sideBar.closeSideBar();
+    WeatherInfo.displayUI();
   }
 }
 

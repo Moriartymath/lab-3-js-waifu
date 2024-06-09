@@ -175,3 +175,14 @@ body {
   transform: translate(80%);
   opacity: 0.5;
 }
+
+.weather-details {
+  display: flex;
+  flex-direction: column;
+  row-gap: 2em;
+}
+
+.recent-locations {
+  display: grid;
+  overflow-x: scroll;
+}

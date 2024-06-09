@@ -19,6 +19,11 @@ class StoragePlaces {
   static clear(): void {
     localStorage.clear();
   }
+
+  static getAllPlaces(): Array<string> {
+    const allPlaces = localStorage.getItem('places');
+    return allPlaces ? JSON.parse(allPlaces) : [1, 2, 3, 5];
+  }
 }
 
 export { StoragePlaces as default };

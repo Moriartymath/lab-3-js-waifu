@@ -33,12 +33,14 @@ const formaterTemp = Intl.NumberFormat(locale, {
   unit: 'celsius',
 });
 
-async function fetchWeather(ip?: boolean) {
-  const city = searchInput?.value;
+async function fetchWeather(searchCity?: string, ip?: boolean) {
+  const city = searchCity || searchInput?.value;
+
   const baseForecastURL =
     'http://api.weatherapi.com/v1/forecast.json?key=45d690a2e9744e09879101551242905&q=';
 
   const response = await axios.get(baseForecastURL + (ip ? 'auto:ip' : city));
+
   parseWeatherObj(response.data).then(coord => {
     const { lat, lon } = coord;
     MapHandler.setDisplayedPos(lat, lon);
@@ -67,4 +69,4 @@ const parseWeatherObj: (
   return { lat: location.lat, lon: location.lon };
 };
 
-export { fetchWeather, MapHandler };
+export { fetchWeather, MapHandler, StoragePlaces };
