@@ -184,5 +184,24 @@ body {
 
 .recent-locations {
   display: grid;
-  overflow-x: scroll;
+  grid-template-rows: 4em 4em;
+  grid-template-columns: 10em 10em;
+  align-items: center;
+  justify-items: center;
+  background: linear-gradient(
+    to left top,
+    rgba(0, 255, 255, 0.81),
+    rgba(0, 0, 255, 0.55)
+  );
+  border-radius: 2em;
+}
+
+.recent-locations a {
+  font-size: 1.7em;
+  color: rgb(255, 255, 255);
+  opacity: 100;
+}
+
+.recent-locations div {
+  display: flex;
 }
