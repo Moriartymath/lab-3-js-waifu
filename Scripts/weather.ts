@@ -21,11 +21,18 @@ const formaterDate = Intl.DateTimeFormat(locale, {
 type responseObj = {
   current: {
     last_updated: string;
-    condition: { icon: string };
+    condition: { text: string; icon: string };
     temp_c: number;
   };
-  forecast: { temp_c: number };
-  location: { name: string; lat: number; lon: number };
+  forecast: {
+    forecastday: Array<{ day: { maxtemp_c: number; mintemp_c: number } }>;
+  };
+  location: {
+    name: string;
+    lat: number;
+    lon: number;
+    localtime_epoch: number;
+  };
 };
 
 const formaterTemp = Intl.NumberFormat(locale, {
@@ -33,18 +40,30 @@ const formaterTemp = Intl.NumberFormat(locale, {
   unit: 'celsius',
 });
 
-async function fetchWeather(searchCity?: string, ip?: boolean) {
+async function fetchWeather(
+  forecastDays: number = 1,
+  searchCity?: string,
+  ip?: boolean,
+  targetEl?: HTMLElement
+) {
   const city = searchCity || searchInput?.value;
 
   const baseForecastURL =
-    'http://api.weatherapi.com/v1/forecast.json?key=45d690a2e9744e09879101551242905&q=';
+    'http://api.weatherapi.com/v1/forecast.json?key=45d690a2e9744e09879101551242905';
 
-  const response = await axios.get(baseForecastURL + (ip ? 'auto:ip' : city));
+  const response = await axios.get(
+    `${baseForecastURL}&q=${ip ? 'auto:ip' : city}${
+      forecastDays > 1 ? '&q=' + forecastDays : ''
+    }`
+  );
 
-  parseWeatherObj(response.data).then(coord => {
-    const { lat, lon } = coord;
-    MapHandler.setDisplayedPos(lat, lon);
-  });
+  console.log(response);
+  if (!targetEl)
+    parseWeatherObj(response.data).then(coord => {
+      const { lat, lon } = coord;
+      MapHandler.setDisplayedPos(lat, lon);
+    });
+  else parseLocationWeather(response.data, targetEl, forecastDays);
 }
 
 const parseWeatherObj: (
@@ -52,7 +71,7 @@ const parseWeatherObj: (
 ) => Promise<{ lat: number; lon: number }> = async function (
   weatherObj: responseObj
 ) {
-  const { current, forecast, location } = weatherObj;
+  const { current, location } = weatherObj;
 
   if (lastUpdateDate)
     lastUpdateDate.textContent = formaterDate.format(
@@ -68,5 +87,50 @@ const parseWeatherObj: (
   weatherIcon?.setAttribute('src', current.condition.icon);
   return { lat: location.lat, lon: location.lon };
 };
+
+const parseLocationWeather = async function (
+  data: responseObj,
+  el: HTMLElement,
+  forecast: number
+) {
+  // console.log(forecast);
+  if (forecast === 1) parseNow(data, el);
+  else parseForecast(data, el);
+};
+type El = HTMLElement | null;
+const parseNow = function (data: responseObj, el: HTMLElement) {
+  // console.log('YOU CALLED PARSE NOW ', el);
+  const cityNameVal = el.dataset.city;
+  const localeTime = data.current.last_updated.split(' ').at(-1);
+  const currentTempVal = data.current.temp_c;
+  const { maxtemp_c, mintemp_c } = data.forecast.forecastday[0].day;
+  const conditionText = data.current.condition.text;
+
+  if (el) {
+    const cityName: El = el.querySelector('.city--name');
+    const timeEl: El = el.querySelector('.city--time');
+    const cityCondition: El = el.querySelector('.city-condition');
+    const currentTemp: El = el.querySelector('.city--current--temp');
+    const lowestTemp: El = el.querySelector('.min--temp');
+    const highestTemp: El = el.querySelector('.max--temp');
+    setText(
+      new Map([
+        [cityName, cityNameVal],
+        [timeEl, localeTime],
+        [cityCondition, conditionText],
+        [currentTemp, formaterTemp.format(currentTempVal)],
+        [lowestTemp, `L:${formaterTemp.format(mintemp_c)}`],
+        [highestTemp, `H:${formaterTemp.format(maxtemp_c)}`],
+      ])
+    );
+  }
+};
+const setText = function (entries: Map<El, string | undefined>) {
+  entries.forEach((val, key) => {
+    if (key) key.textContent = val ?? '';
+  });
+};
+
+const parseForecast = function (data: responseObj, el: HTMLElement) {};
 
 export { fetchWeather, MapHandler, StoragePlaces };

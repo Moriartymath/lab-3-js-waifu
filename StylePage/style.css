@@ -144,7 +144,7 @@ body {
   width: 30svw;
   transition: transform 1s, opacity 0.5s ease-in-out;
   overflow-y: scroll;
-  background: #dbcacabe;
+  background: #74adaee0;
 }
 
 .weather-info {
@@ -222,6 +222,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  row-gap: 1.5rem;
 }
 
 .temp-low--high {
@@ -236,4 +237,11 @@ body {
 }
 
 .location--date {
+  display: flex;
+  flex-direction: column;
+  align-items: first baseline;
+}
+
+.city-condition {
+  padding-top: 0.2rem;
 }

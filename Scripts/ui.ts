@@ -10,7 +10,7 @@ class UI {
   private static displayMap(): void {
     window.addEventListener('load', () => {
       MapHandler.initMap();
-      fetchWeather(undefined, true);
+      fetchWeather(1, undefined, true);
       document.querySelector('.search')?.addEventListener('click', () => {
         fetchWeather();
       });
