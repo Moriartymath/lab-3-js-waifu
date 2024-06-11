@@ -25,8 +25,8 @@ class WeatherInfo {
       <div class="city--conditions"> 
       <span class="city--current--temp">27C</span>
       <div class="temp-low--high"> 
-      <span class="max--temp">H:23</span>
-      <span class="min--temp">L:10</span>
+      <p class="max--temp">H:23</p>
+      <p class="min--temp">L:10</p>
       </div>
       </div>
       </div>
@@ -41,7 +41,6 @@ class WeatherInfo {
     const cityElement: HTMLElement | null = document.querySelector(
       `.${cityTag}--place`
     );
-    console.log(cityElement);
     if (!cityElement) return;
     const args = [1, cityElement.dataset.city, undefined, cityElement];
     setInterval(fetchWeather, 1000 * 60, ...args);

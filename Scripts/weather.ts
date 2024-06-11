@@ -57,7 +57,6 @@ async function fetchWeather(
     }`
   );
 
-  console.log(response);
   if (!targetEl)
     parseWeatherObj(response.data).then(coord => {
       const { lat, lon } = coord;
@@ -93,13 +92,11 @@ const parseLocationWeather = async function (
   el: HTMLElement,
   forecast: number
 ) {
-  // console.log(forecast);
   if (forecast === 1) parseNow(data, el);
   else parseForecast(data, el);
 };
 type El = HTMLElement | null;
 const parseNow = function (data: responseObj, el: HTMLElement) {
-  // console.log('YOU CALLED PARSE NOW ', el);
   const cityNameVal = el.dataset.city;
   const localeTime = data.current.last_updated.split(' ').at(-1);
   const currentTempVal = data.current.temp_c;
@@ -119,8 +116,8 @@ const parseNow = function (data: responseObj, el: HTMLElement) {
         [timeEl, localeTime],
         [cityCondition, conditionText],
         [currentTemp, formaterTemp.format(currentTempVal)],
-        [lowestTemp, `L:${formaterTemp.format(mintemp_c)}`],
-        [highestTemp, `H:${formaterTemp.format(maxtemp_c)}`],
+        [lowestTemp, `L:${mintemp_c.toFixed(1)}°`],
+        [highestTemp, `H:${maxtemp_c.toFixed(1)}°`],
       ])
     );
   }

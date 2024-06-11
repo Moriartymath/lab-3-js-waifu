@@ -193,8 +193,7 @@ body {
 .recent-locations {
   display: flex;
   flex-direction: column-reverse;
-  row-gap: 5em;
-  /* justify-content: center; */
+  row-gap: 3em;
   align-items: center;
 }
 
@@ -207,7 +206,8 @@ body {
 .recent-locations .place {
   display: flex;
   width: 80%;
-  height: 7rem;
+  user-select: none;
+  height: fit-content;
   justify-content: space-between;
   align-items: first baseline;
   padding-top: 1em;
@@ -224,11 +224,11 @@ body {
   align-items: center;
   row-gap: 1.5rem;
 }
-
 .temp-low--high {
   display: grid;
   grid-template-rows: 2em;
   grid-template-columns: 3em 3em;
+  grid-gap: 0em 0.9em;
 }
 
 .city--current--temp {
@@ -243,5 +243,6 @@ body {
 }
 
 .city-condition {
-  padding-top: 0.2rem;
+  padding-top: 0.3rem;
+  width: 7em;
 }
