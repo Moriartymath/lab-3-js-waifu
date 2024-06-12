@@ -13,7 +13,7 @@ html {
   overflow-y: scroll;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
     Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  font-size: clamp(1.2rem, 1svw, 3.3rem);
+  font-size: clamp(1rem, 1.5rem, 2rem);
 }
 
 .links {
@@ -45,7 +45,7 @@ html {
 .search-city {
   display: flex;
   flex-direction: row;
-  font-size: 1.7svw;
+  font-size: 1.3svw;
 }
 .search {
   align-self: center;
@@ -141,10 +141,11 @@ body {
 }
 
 .right-info {
-  width: 30svw;
+  width: 25svw;
   transition: transform 1s, opacity 0.5s ease-in-out;
   overflow-y: scroll;
-  background: #74adaee0;
+  background: linear-gradient(to top left, #51a8c9, #4fb7eede);
+  border-left: 1px solid whitesmoke;
 }
 
 .weather-info {
@@ -167,7 +168,7 @@ body {
   user-select: none;
 }
 .side-bar-btn {
-  width: 3svw;
+  width: 2.5svw;
 }
 
 .closed {
@@ -198,9 +199,8 @@ body {
 }
 
 .recent-locations a {
-  font-size: 1.7em;
+  font-size: 1.5em;
   color: rgb(255, 255, 255);
-  opacity: 100;
 }
 
 .recent-locations .place {
@@ -245,4 +245,41 @@ body {
 .city-condition {
   padding-top: 0.3rem;
   width: 7em;
+}
+
+.city-detailed-forecast {
+  display: none;
+  flex-direction: column;
+  background: linear-gradient(to top, #c3a0a0, #56b6d8);
+  height: 100%;
+  opacity: 1;
+  width: 75svw;
+  position: relative;
+  transition: all 0.1s ease-in-out;
+  overflow-y: hidden;
+  padding: 1rem;
+}
+
+.opened {
+  display: flex;
+  z-index: 10;
+}
+
+.header--forecast {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.exit--btn {
+  font-size: 1rem;
+  border-radius: 15px;
+  padding: 1px 10px 2px 10px;
+  user-select: none;
+  background: #ffe4ba;
+  color: rgb(0, 0, 0);
+  border-width: 0;
+  font-weight: 500;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
