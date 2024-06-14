@@ -25,7 +25,29 @@ type responseObj = {
     temp_c: number;
   };
   forecast: {
-    forecastday: Array<{ day: { maxtemp_c: number; mintemp_c: number } }>;
+    forecastday: Array<{
+      date: string;
+      day: {
+        maxtemp_c: number;
+        mintemp_c: number;
+        avghumidity: number;
+        avgtemp_c: number;
+        condition: { text: string; icon: string };
+        uv: number;
+      };
+      hour: Array<{
+        feelslike_c: number;
+        humidity: number;
+        temp_c: number;
+        time: string;
+        uv: number;
+        wind_kph: number;
+        pressure_mb: number;
+        gust_kph: number;
+        chance_of_rain: number;
+        condition: { text: string; icon: string };
+      }>;
+    }>;
   };
   location: {
     name: string;
@@ -53,9 +75,10 @@ async function fetchWeather(
 
   const response = await axios.get(
     `${baseForecastURL}&q=${ip ? 'auto:ip' : city}${
-      forecastDays > 1 ? '&q=' + forecastDays : ''
+      forecastDays > 1 ? '&days=' + forecastDays : ''
     }`
   );
+  console.log(response.data);
 
   if (!targetEl)
     parseWeatherObj(response.data).then(coord => {
@@ -128,6 +151,62 @@ const setText = function (entries: Map<El, string | undefined>) {
   });
 };
 
-const parseForecast = function (data: responseObj, el: HTMLElement) {};
+const parseForecast = function (data: responseObj, el: HTMLElement) {
+  const arrForecast = data.forecast.forecastday;
+  const weatherDivDetails = document.querySelector(
+    '.weather--details--forecast'
+  );
+
+  let dayHTMLStr: string = '';
+  arrForecast.forEach((day, index) => {
+    let hourHTMLStr: string = '';
+    const {
+      avgtemp_c,
+      maxtemp_c,
+      mintemp_c,
+      uv: uvDay,
+      avghumidity,
+      condition: { text, icon },
+    } = day.day;
+
+    day.hour.forEach(hourForecast => {
+      const {
+        feelslike_c,
+        humidity,
+        temp_c,
+        time,
+        uv: uvHour,
+        wind_kph,
+        pressure_mb,
+        gust_kph,
+        chance_of_rain,
+        condition: { text: textCondition, icon: urlIcon },
+      } = hourForecast;
+      hourHTMLStr += `
+      <div class="hour-forecast">
+      <p class="current-hour">${Intl.DateTimeFormat('uk-UA', {
+        hour: '2-digit',
+      }).format(new Date(time))}</p>
+      <img src="${icon}" alt="weather" class="weather-condition-img"/>
+      <p class="temp--hour">${temp_c}°</p>
+      </div>
+      `;
+    });
+
+    dayHTMLStr += `
+      <div class="day--forecast" data-date=${day.date} data-day=${index + 1}>
+       <div class="hourly--forecast">
+        <h3>Hourly Forecast</h3>
+        <div class="slider">
+        ${hourHTMLStr}
+        </div>
+       </div>
+      </div> 
+      `;
+  });
+
+  if (weatherDivDetails) weatherDivDetails.innerHTML = dayHTMLStr;
+  console.log('Added to new Weather');
+};
 
 export { fetchWeather, MapHandler, StoragePlaces };

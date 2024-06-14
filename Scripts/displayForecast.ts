@@ -15,17 +15,19 @@ class Forecast {
     this.locationsDiv?.addEventListener(
       'click',
       function (ev: Event) {
-        const target: HTMLElement | null = ev.target;
+        const target: EventTarget | null = ev.target;
         const cityDiv: HTMLElement | null = target?.closest('.place');
 
         if (cityDiv?.classList.contains('place')) {
           this.forecast.dataset.city = cityDiv.dataset.city;
 
-          if (!this.forecast.classList.contains('opened')) {
-            this.forecast.classList.add('opened');
-            document.querySelector('.left-info').style.visibility = 'hidden';
-            this.displayForecast(cityDiv.dataset.city);
-          }
+          // if (this.forecast.classList.contains('opened')) {
+          this.forecast.classList.add('opened');
+          const leftInfoPanel = document.querySelector('.left-info');
+          if (leftInfoPanel) leftInfoPanel.style.visibility = 'hidden';
+
+          this.displayForecast(cityDiv.dataset.city);
+          // }
         }
       }.bind(this)
     );
@@ -36,7 +38,8 @@ class Forecast {
     );
     console.log(cityElement);
     if (!cityElement) return;
-
+    console.log();
+    console.log('Fetched!');
     fetchWeather(14, city, undefined, cityElement);
   }
 
@@ -46,12 +49,12 @@ class Forecast {
     if (!exitBtn) return;
     const handler = function () {
       this.forecast.classList.remove('opened');
-      document.querySelector('.left-info').style.visibility = 'visible';
+      const leftPanel = document.querySelector('.left-info');
+      if (leftPanel) leftPanel.style.visibility = 'visible';
     }.bind(this);
 
     exitBtn.addEventListener('click', handler);
     document.body.addEventListener('keydown', ev => {
-      console.log(ev.key);
       if (ev.key === 'Escape') handler();
     });
   }
