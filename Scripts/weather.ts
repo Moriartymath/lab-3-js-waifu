@@ -54,6 +54,7 @@ type responseObj = {
     lat: number;
     lon: number;
     localtime_epoch: number;
+    localtime: string;
   };
 };
 
@@ -156,8 +157,12 @@ const parseForecast = function (data: responseObj, el: HTMLElement) {
   const weatherDivDetails = document.querySelector(
     '.weather--details--forecast'
   );
+  const localTime = new Date(data.location.localtime);
+  const localHour = localTime.getHours();
 
   let dayHTMLStr: string = '';
+  let nowHourlyForecast: string = '';
+
   arrForecast.forEach((day, index) => {
     let hourHTMLStr: string = '';
     const {
@@ -168,6 +173,8 @@ const parseForecast = function (data: responseObj, el: HTMLElement) {
       avghumidity,
       condition: { text, icon },
     } = day.day;
+    const currentDay = new Date();
+    const forecastDay = new Date(day.date);
 
     day.hour.forEach(hourForecast => {
       const {
@@ -182,19 +189,34 @@ const parseForecast = function (data: responseObj, el: HTMLElement) {
         chance_of_rain,
         condition: { text: textCondition, icon: urlIcon },
       } = hourForecast;
-      hourHTMLStr += `
-      <div class="hour-forecast">
-      <p class="current-hour">${Intl.DateTimeFormat('uk-UA', {
-        hour: '2-digit',
-      }).format(new Date(time))}</p>
-      <img src="${icon}" alt="weather" class="weather-condition-img"/>
+      const innerContent = `<div class="hour-forecast"> <p class="current-hour">${Intl.DateTimeFormat(
+        'uk-UA',
+        {
+          hour: '2-digit',
+        }
+      ).format(new Date(time))}</p>
+      <img src="${urlIcon}" alt="weather" class="weather-condition-img"/>
       <p class="temp--hour">${temp_c}°</p>
-      </div>
-      `;
+      </div>`;
+      const hour = new Date(time).getHours();
+      if (
+        (localHour <= hour && forecastDay.getDate() === localTime.getDate()) ||
+        (forecastDay.getDate() === localTime.getDate() + 1 && localHour >= hour)
+      ) {
+        nowHourlyForecast += innerContent;
+      }
+      hourHTMLStr += innerContent;
     });
 
     dayHTMLStr += `
       <div class="day--forecast" data-date=${day.date} data-day=${index + 1}>
+      <p class="day-text">${
+        forecastDay.getDate() === currentDay.getDate()
+          ? 'Today'
+          : Intl.DateTimeFormat('en-UK', {
+              weekday: 'long',
+            }).format(forecastDay)
+      }</p>
        <div class="hourly--forecast">
         <h3>Hourly Forecast</h3>
         <div class="slider">
@@ -205,8 +227,16 @@ const parseForecast = function (data: responseObj, el: HTMLElement) {
       `;
   });
 
-  if (weatherDivDetails) weatherDivDetails.innerHTML = dayHTMLStr;
-  console.log('Added to new Weather');
+  if (weatherDivDetails) {
+    weatherDivDetails.innerHTML = dayHTMLStr;
+    weatherDivDetails.insertAdjacentHTML(
+      'afterbegin',
+      `<div class="hourly--forecast now"><div class="slider">${nowHourlyForecast}</div></div>`
+    );
+    document
+      .querySelector('.now')
+      ?.firstElementChild?.querySelector('.current-hour')?.textContent = 'now';
+  }
 };
 
 export { fetchWeather, MapHandler, StoragePlaces };

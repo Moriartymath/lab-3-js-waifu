@@ -21,13 +21,11 @@ class Forecast {
         if (cityDiv?.classList.contains('place')) {
           this.forecast.dataset.city = cityDiv.dataset.city;
 
-          // if (this.forecast.classList.contains('opened')) {
           this.forecast.classList.add('opened');
           const leftInfoPanel = document.querySelector('.left-info');
           if (leftInfoPanel) leftInfoPanel.style.visibility = 'hidden';
 
           this.displayForecast(cityDiv.dataset.city);
-          // }
         }
       }.bind(this)
     );
@@ -36,10 +34,7 @@ class Forecast {
     const cityElement: HTMLElement | null = document.querySelector(
       `.${city}--place`
     );
-    console.log(cityElement);
     if (!cityElement) return;
-    console.log();
-    console.log('Fetched!');
     fetchWeather(14, city, undefined, cityElement);
   }
 
