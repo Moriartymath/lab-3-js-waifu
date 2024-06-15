@@ -6,6 +6,7 @@ const recentPlaces = document.querySelector('.recent-locations');
 class WeatherInfo {
   static displayUI(): void {
     this.diplayRecentPlaces();
+    this.updateWeather();
   }
 
   private static diplayRecentPlaces(): void {
@@ -37,13 +38,25 @@ class WeatherInfo {
     });
   }
 
-  private static setUpdateTime(cityTag: string): void {
+  private static setUpdateTime(cityTag: string, updateTime: number = 60): void {
     const cityElement: HTMLElement | null = document.querySelector(
       `.${cityTag}--place`
     );
     if (!cityElement) return;
-    const args = [1, cityElement.dataset.city, undefined, cityElement];
-    setInterval(fetchWeather, 1000 * 60, ...args);
+    const args: Array<number | string | undefined | HTMLElement> = [
+      1,
+      cityElement.dataset.city,
+      undefined,
+      cityElement,
+    ];
+    if (updateTime === 0) fetchWeather(...args);
+    else setInterval(fetchWeather, 1000 * 60, ...args);
+  }
+  static updateWeather(): void {
+    const allPlaces = StoragePlaces.getAllPlaces();
+    allPlaces.forEach(placeName =>
+      this.setUpdateTime(placeName.toLowerCase(), 0)
+    );
   }
 }
 
