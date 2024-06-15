@@ -25,13 +25,36 @@ type responseObj = {
     temp_c: number;
   };
   forecast: {
-    forecastday: Array<{ day: { maxtemp_c: number; mintemp_c: number } }>;
+    forecastday: Array<{
+      date: string;
+      day: {
+        maxtemp_c: number;
+        mintemp_c: number;
+        avghumidity: number;
+        avgtemp_c: number;
+        condition: { text: string; icon: string };
+        uv: number;
+      };
+      hour: Array<{
+        feelslike_c: number;
+        humidity: number;
+        temp_c: number;
+        time: string;
+        uv: number;
+        wind_kph: number;
+        pressure_mb: number;
+        gust_kph: number;
+        chance_of_rain: number;
+        condition: { text: string; icon: string };
+      }>;
+    }>;
   };
   location: {
     name: string;
     lat: number;
     lon: number;
     localtime_epoch: number;
+    localtime: string;
   };
 };
 
@@ -53,9 +76,10 @@ async function fetchWeather(
 
   const response = await axios.get(
     `${baseForecastURL}&q=${ip ? 'auto:ip' : city}${
-      forecastDays > 1 ? '&q=' + forecastDays : ''
+      forecastDays > 1 ? '&days=' + forecastDays : ''
     }`
   );
+  console.log(response.data);
 
   if (!targetEl)
     parseWeatherObj(response.data).then(coord => {
@@ -128,6 +152,105 @@ const setText = function (entries: Map<El, string | undefined>) {
   });
 };
 
-const parseForecast = function (data: responseObj, el: HTMLElement) {};
+const parseForecast = function (data: responseObj, el: HTMLElement) {
+  console.log(data);
+  const arrForecast = data.forecast.forecastday;
+  const weatherDivDetails = document.querySelector(
+    '.weather--details--forecast'
+  );
+  const locationDescriptionDiv = document.querySelector(
+    '.location-description'
+  );
+  const localTime = new Date(data.location.localtime);
+  const localHour = localTime.getHours();
+
+  let dayHTMLStr: string = '';
+  let nowHourlyForecast: string = '';
+
+  arrForecast.forEach((day, index) => {
+    let hourHTMLStr: string = '';
+    const {
+      avgtemp_c,
+      maxtemp_c,
+      mintemp_c,
+      uv: uvDay,
+      avghumidity,
+      condition: { text, icon },
+    } = day.day;
+    const currentDay = new Date();
+    const forecastDay = new Date(day.date);
+
+    day.hour.forEach(hourForecast => {
+      const {
+        feelslike_c,
+        humidity,
+        temp_c,
+        time,
+        uv: uvHour,
+        wind_kph,
+        pressure_mb,
+        gust_kph,
+        chance_of_rain,
+        condition: { text: textCondition, icon: urlIcon },
+      } = hourForecast;
+      const innerContent = `<div class="hour-forecast"> <p class="current-hour">${Intl.DateTimeFormat(
+        'uk-UA',
+        {
+          hour: '2-digit',
+        }
+      ).format(new Date(time))}</p>
+      <img src="${urlIcon}" alt="weather" class="weather-condition-img"/>
+      <p class="temp--hour">${temp_c}°</p>
+      </div>`;
+      const hour = new Date(time).getHours();
+      if (
+        (localHour <= hour && forecastDay.getDate() === localTime.getDate()) ||
+        (forecastDay.getDate() === localTime.getDate() + 1 && localHour >= hour)
+      ) {
+        nowHourlyForecast += innerContent;
+      }
+      hourHTMLStr += innerContent;
+    });
+
+    dayHTMLStr += `
+      <div class="day--forecast" data-date=${day.date} data-day=${index + 1}>
+      <p class="day-text">${
+        forecastDay.getDate() === currentDay.getDate()
+          ? 'Today'
+          : Intl.DateTimeFormat('en-UK', {
+              weekday: 'short',
+            }).format(forecastDay)
+      }</p>
+       <div class="hourly--forecast">
+        <h3>Hourly Forecast</h3>
+        <div class="slider">
+        ${hourHTMLStr}
+        </div>
+       </div>
+      </div> 
+      `;
+  });
+
+  if (weatherDivDetails) {
+    weatherDivDetails.innerHTML = `
+    <div class="main-forecast">
+    <div class="forecast-description"> 
+    <p class="weather-days">${arrForecast.length}-DAY FORECAST</p></div>
+    ${dayHTMLStr}</div>`;
+    weatherDivDetails.insertAdjacentHTML(
+      'afterbegin',
+      `<div class="hourly--forecast now"><div class="slider">${nowHourlyForecast}</div></div>`
+    );
+    const firstHourForecast = document
+      .querySelector('.now')
+      ?.firstElementChild?.querySelector('.current-hour');
+    if (firstHourForecast) firstHourForecast.textContent = 'now';
+
+    if (locationDescriptionDiv) {
+      const locNameEl = locationDescriptionDiv.querySelector('.location--name');
+      if (locNameEl) locNameEl.textContent = data.location.name;
+    }
+  }
+};
 
 export { fetchWeather, MapHandler, StoragePlaces };

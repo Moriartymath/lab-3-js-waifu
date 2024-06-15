@@ -2,11 +2,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="images/cloudy-day-1.svg" type="image/svg">
     <link
       href="https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined"
       rel="stylesheet"
     />
-    <title>Document</title>
+    <title>Forecast</title>
     <link
       rel="stylesheet"
       href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
@@ -17,6 +18,15 @@
     <script src="Scripts/script.ts" defer></script>
   </head>
   <body>
+    <div class="city-detailed-forecast" data-city="null">
+      <header class="header--forecast"><button class="exit--btn">Back to Map</button>
+        <div class="location-description">
+          <h1 class="location--name"></h1>
+        </div>
+      </header>
+      <main class="weather--details--forecast">
+      </main>
+    </div>
     <div class="overlay-main">
       <div class="left-info">
         <div class="current-temperature-main">
