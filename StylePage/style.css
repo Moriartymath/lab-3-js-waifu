@@ -258,7 +258,7 @@ body {
   transition: all 0.1s ease-in-out;
   overflow-y: scroll;
   padding: 1rem;
-  row-gap: 3rem;
+  row-gap: 5rem;
 }
 
 .opened {
@@ -288,15 +288,16 @@ body {
 .day--forecast {
   display: flex;
   flex-direction: row;
-  width: 70%;
-  justify-content: center;
+  width: 100%;
   column-gap: 2em;
+  padding: 1em;
+  border-top: 1px solid white;
 }
 
 .hourly--forecast {
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: 80%;
   user-select: none;
 }
 
@@ -320,7 +321,7 @@ body {
   display: flex;
   flex-direction: row;
   column-gap: 1.2em;
-  overflow-x: scroll;
+  overflow-x: hidden;
   padding-bottom: 1em;
 }
 
@@ -329,7 +330,7 @@ body {
   flex-direction: column;
   row-gap: 1.2rem;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
   padding-left: 2rem;
 }
 
@@ -339,8 +340,9 @@ body {
 }
 
 .day-text {
-  justify-self: flex-start;
+  /* justify-self: flex-start; */
   align-self: center;
+  width: 7em;
 }
 
 .now {
@@ -350,4 +352,15 @@ body {
   padding: 1em;
   background: #f5f5ffb0;
   width: 80%;
+  align-self: center;
+}
+
+.main-forecast {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 80%;
+  border: 1px solid black;
+  padding: 2em;
+  border-radius: 20px;
 }

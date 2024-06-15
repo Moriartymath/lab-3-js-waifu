@@ -228,7 +228,7 @@ const parseForecast = function (data: responseObj, el: HTMLElement) {
   });
 
   if (weatherDivDetails) {
-    weatherDivDetails.innerHTML = dayHTMLStr;
+    weatherDivDetails.innerHTML = `<div class="main-forecast">${dayHTMLStr}</div>`;
     weatherDivDetails.insertAdjacentHTML(
       'afterbegin',
       `<div class="hourly--forecast now"><div class="slider">${nowHourlyForecast}</div></div>`
