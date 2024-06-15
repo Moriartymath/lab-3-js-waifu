@@ -153,9 +153,13 @@ const setText = function (entries: Map<El, string | undefined>) {
 };
 
 const parseForecast = function (data: responseObj, el: HTMLElement) {
+  console.log(data);
   const arrForecast = data.forecast.forecastday;
   const weatherDivDetails = document.querySelector(
     '.weather--details--forecast'
+  );
+  const locationDescriptionDiv = document.querySelector(
+    '.location-description'
   );
   const localTime = new Date(data.location.localtime);
   const localHour = localTime.getHours();
@@ -214,7 +218,7 @@ const parseForecast = function (data: responseObj, el: HTMLElement) {
         forecastDay.getDate() === currentDay.getDate()
           ? 'Today'
           : Intl.DateTimeFormat('en-UK', {
-              weekday: 'long',
+              weekday: 'short',
             }).format(forecastDay)
       }</p>
        <div class="hourly--forecast">
@@ -228,7 +232,11 @@ const parseForecast = function (data: responseObj, el: HTMLElement) {
   });
 
   if (weatherDivDetails) {
-    weatherDivDetails.innerHTML = `<div class="main-forecast">${dayHTMLStr}</div>`;
+    weatherDivDetails.innerHTML = `
+    <div class="main-forecast">
+    <div class="forecast-description"> 
+    <p class="weather-days">${arrForecast.length}-DAY FORECAST</p></div>
+    ${dayHTMLStr}</div>`;
     weatherDivDetails.insertAdjacentHTML(
       'afterbegin',
       `<div class="hourly--forecast now"><div class="slider">${nowHourlyForecast}</div></div>`
@@ -237,6 +245,11 @@ const parseForecast = function (data: responseObj, el: HTMLElement) {
       .querySelector('.now')
       ?.firstElementChild?.querySelector('.current-hour');
     if (firstHourForecast) firstHourForecast.textContent = 'now';
+
+    if (locationDescriptionDiv) {
+      const locNameEl = locationDescriptionDiv.querySelector('.location--name');
+      if (locNameEl) locNameEl.textContent = data.location.name;
+    }
   }
 };
 
