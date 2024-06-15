@@ -233,9 +233,10 @@ const parseForecast = function (data: responseObj, el: HTMLElement) {
       'afterbegin',
       `<div class="hourly--forecast now"><div class="slider">${nowHourlyForecast}</div></div>`
     );
-    document
+    const firstHourForecast = document
       .querySelector('.now')
-      ?.firstElementChild?.querySelector('.current-hour')?.textContent = 'now';
+      ?.firstElementChild?.querySelector('.current-hour');
+    if (firstHourForecast) firstHourForecast.textContent = 'now';
   }
 };
 
