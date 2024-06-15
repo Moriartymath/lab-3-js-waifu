@@ -102,7 +102,7 @@ html {
   color: rgb(0, 0, 0);
   user-select: none;
   font-weight: 900;
-  font-size: 2em;
+  font-size: 2.5svw;
   backdrop-filter: blur(1.5px);
 }
 
@@ -146,6 +146,7 @@ body {
   overflow-y: scroll;
   background: linear-gradient(to top left, #51a8c9, #4fb7eede);
   border-left: 1px solid whitesmoke;
+  font-size: 1em;
 }
 
 .weather-info {
@@ -178,7 +179,7 @@ body {
 
 .weather-details {
   width: 100%;
-  padding-top: 4rem;
+  padding-top: 2rem;
   padding-bottom: 5rem;
 }
 .place {
@@ -196,6 +197,7 @@ body {
   flex-direction: column-reverse;
   row-gap: 3em;
   align-items: center;
+  font-size: 1.1svw;
 }
 
 .recent-locations a {
@@ -259,6 +261,7 @@ body {
   overflow-y: hidden;
   padding: 1rem;
   row-gap: 2rem;
+  font-size: 1.25svw;
 }
 
 .opened {
@@ -274,7 +277,7 @@ body {
 }
 
 .exit--btn {
-  font-size: 1rem;
+  font-size: 1em;
   border-radius: 15px;
   padding: 1px 10px 2px 10px;
   user-select: none;
@@ -304,7 +307,7 @@ body {
 }
 
 .slider::-webkit-scrollbar {
-  height: 10px;
+  height: 7px;
   border-radius: 10px;
   background: rgba(217, 183, 183, 0.498);
   cursor: pointer;
@@ -373,4 +376,8 @@ body {
 }
 .weather-days {
   padding: 1em 0 1em 0;
+}
+
+.weather-condition-img {
+  height: 3.5svw;
 }
