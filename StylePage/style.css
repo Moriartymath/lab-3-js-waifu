@@ -13,7 +13,7 @@ html {
   overflow-y: scroll;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
     Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  font-size: clamp(1rem, 1.5rem, 2rem);
+  /* font-size: clamp(0.7svw, 1svw, 5svh); */
 }
 
 .links {
@@ -261,7 +261,7 @@ body {
   overflow-y: hidden;
   padding: 1rem;
   row-gap: 2rem;
-  font-size: 1.25svw;
+  font-size: 1.8vmin;
 }
 
 .opened {
@@ -379,5 +379,5 @@ body {
 }
 
 .weather-condition-img {
-  height: 3.5svw;
+  height: 5vmin;
 }
