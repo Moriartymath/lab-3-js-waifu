@@ -8,9 +8,21 @@ class WeatherInfo {
     this.diplayRecentPlaces();
     this.updateWeather();
   }
+  static addLocation(newLoc: string | undefined) {
+    const recenLoc = document.querySelector(
+      `.${newLoc?.toLocaleLowerCase()}--place`
+    );
 
-  private static diplayRecentPlaces(): void {
-    const allPlaces = StoragePlaces.getAllPlaces();
+    if (!recenLoc) {
+      this.diplayRecentPlaces(true);
+      this.updateWeather();
+    }
+  }
+
+  private static diplayRecentPlaces(onlyOneLoc: boolean = false): void {
+    let allPlaces = StoragePlaces.getAllPlaces();
+
+    if (onlyOneLoc) allPlaces = allPlaces.slice(-1);
 
     allPlaces.forEach(placeName => {
       const htmlStr = `

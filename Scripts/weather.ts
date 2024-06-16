@@ -73,20 +73,23 @@ async function fetchWeather(
 
   const baseForecastURL =
     'http://api.weatherapi.com/v1/forecast.json?key=45d690a2e9744e09879101551242905';
+  try {
+    const response = await axios.get(
+      `${baseForecastURL}&q=${ip ? 'auto:ip' : city}${
+        forecastDays > 1 ? '&days=' + forecastDays : ''
+      }`
+    );
 
-  const response = await axios.get(
-    `${baseForecastURL}&q=${ip ? 'auto:ip' : city}${
-      forecastDays > 1 ? '&days=' + forecastDays : ''
-    }`
-  );
-  console.log(response.data);
-
-  if (!targetEl)
-    parseWeatherObj(response.data).then(coord => {
-      const { lat, lon } = coord;
-      MapHandler.setDisplayedPos(lat, lon);
-    });
-  else parseLocationWeather(response.data, targetEl, forecastDays);
+    if (!targetEl)
+      await parseWeatherObj(response.data).then(coord => {
+        const { lat, lon } = coord;
+        MapHandler.setDisplayedPos(lat, lon);
+      });
+    else parseLocationWeather(response.data, targetEl, forecastDays);
+  } catch (error) {
+    alert('Invalid location name!');
+  }
+  return city;
 }
 
 const parseWeatherObj: (
@@ -153,7 +156,6 @@ const setText = function (entries: Map<El, string | undefined>) {
 };
 
 const parseForecast = function (data: responseObj, el: HTMLElement) {
-  console.log(data);
   const arrForecast = data.forecast.forecastday;
   const weatherDivDetails = document.querySelector(
     '.weather--details--forecast'

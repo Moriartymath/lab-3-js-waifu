@@ -6,7 +6,6 @@ class StoragePlaces {
     if (storedValue !== null) this.places = JSON.parse(storedValue);
 
     if (!this.places.includes(placeName)) this.places.push(placeName);
-
     localStorage.setItem('places', JSON.stringify(this.places));
   }
 
@@ -22,7 +21,7 @@ class StoragePlaces {
 
   static getAllPlaces(): Array<string> {
     const allPlaces = localStorage.getItem('places');
-    return allPlaces ? JSON.parse(allPlaces) : [1, 2, 3, 5];
+    return allPlaces ? JSON.parse(allPlaces) : [];
   }
 }
 
