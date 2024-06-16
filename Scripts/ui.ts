@@ -6,15 +6,18 @@ import Forecast from './displayForecast';
 class UI {
   static displayUI(): void {
     this.displayMap();
-    this.sideBarUI();
-    this.displayForecast();
   }
-  private static displayMap(): void {
-    window.addEventListener('load', () => {
+  private static displayMap() {
+    window.addEventListener('load', async () => {
       MapHandler.initMap();
-      fetchWeather(1, undefined, true);
+      fetchWeather(1, undefined, true, undefined).then(res => {
+        this.sideBarUI();
+        this.displayForecast();
+      });
       document.querySelector('.search')?.addEventListener('click', () => {
-        fetchWeather();
+        fetchWeather().then(res => {
+          WeatherInfo.addLocation(res);
+        });
       });
     });
   }
